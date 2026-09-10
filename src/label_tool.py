@@ -65,11 +65,28 @@ def sample_candidates(
     return pool[:target_size]
 
 
+_NULLABLE_FIELDS = ("llm_suggested_intent", "llm_suggested_action", "split")
+
+
 def _load_existing(path: Path) -> list[GoldenExample]:
+    """Read golden_set.csv back into GoldenExample rows.
+
+    csv.DictWriter serializes a Python `None` as an empty string, but
+    csv.DictReader reads it back as `""`, not `None` -- pydantic then
+    rejects `""` for the Optional[AgentAction]/Literal fields, since
+    neither accepts an empty string. Restoring `None` for the known
+    nullable columns before validation makes the round trip lossless.
+    """
     if not path.exists():
         return []
     with path.open(newline="", encoding="utf-8") as f:
-        return [GoldenExample.model_validate(row) for row in csv.DictReader(f)]
+        rows = []
+        for row in csv.DictReader(f):
+            for field in _NULLABLE_FIELDS:
+                if row.get(field) == "":
+                    row[field] = None
+            rows.append(GoldenExample.model_validate(row))
+        return rows
 
 
 def _append(path: Path, example: GoldenExample, write_header: bool) -> None:
