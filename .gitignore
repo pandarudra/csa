@@ -1,0 +1,20 @@
+plan/
+.env
+.env.local
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Raw Kaggle export is ~493MB -- too large to commit, and not ours to redistribute.
+# README explains how to fetch it; data/processed/spotify_threads.jsonl ships the
+# small derived subsample instead (that one file IS committed).
+dataset/
+
+# Retrieval index rebuilds from spotify_threads.jsonl (which IS committed) in
+# under a minute via `python -m src.retrieve` -- no reason to commit a 32MB
+# binary that regenerates that cheaply from data already in the repo.
+data/processed/retrieval_index.*
+
+# Trained baseline classifier cache -- regenerates from golden_set.csv.
+results/simple_baseline_classifier.pkl

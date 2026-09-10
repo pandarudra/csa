@@ -1,0 +1,90 @@
+# Intent taxonomy for the SpotifyCares support agent.
+#
+# Derived empirically: `python -m src.eda_taxonomy --sample-size 1200 --n-clusters 10`
+# embedded 1200 real customer opening messages (NVIDIA nemotron-3-embed-1b) and
+# k-means clustered them. The 10 raw clusters were manually inspected, named, and
+# merged down to 6 -- small enough to classify and evaluate reliably, per the
+# assignment's own guidance against dozens of tiny intents. Two merge decisions
+# worth noting (full reasoning in report/DECISIONS.md):
+#   - Family-plan issues (their own small, clean cluster) were folded into
+#     Billing & Subscription -- they're a subscription-management problem, and
+#     splitting them out would have made a 7th intent with limited examples.
+#   - "Ads despite paying for Premium" appeared as scattered examples inside a
+#     feature-feedback cluster, not as its own cluster with real volume, and is
+#     really a "didn't get what I paid for" entitlement problem -- folded into
+#     Billing & Subscription rather than invented as a 7th intent from a
+#     hypothesis that the data didn't support.
+#
+# always_escalate is the deterministic half of the hybrid escalation decision
+# (see src/pipeline.py): it sets the default for the intent as a whole. An LLM
+# review step can still override it per-message (e.g. auto-escalating an
+# unusually angry technical complaint) -- see spec section 17 / README.
+
+- name: "Account & Login"
+  description: >
+    Trouble logging in, password resets, a locked or hacked/compromised
+    account, and linking or unlinking third-party logins (Facebook, Hulu,
+    a student email). Always requires verifying account ownership before
+    any fix can be applied, which is not something a public reply can do.
+  always_escalate: true
+  examples:
+    - "@SpotifyCares I'm unable to log in my Premium account. Not sure what happen. My un/pw isn't working. I really don't want to create another"
+    - "@SpotifyCares I think my account has been hacked. Can you help. I've never used Firefox before and this kept popping up while I was listening on the go."
+    - "@SpotifyCares Hi! I can't log in to my account to cancel it. Please help! My UN is ivette0327. I tried reseting PW. No luck."
+
+- name: "Billing & Subscription"
+  description: >
+    Payment, charge, refund, trial, and Premium/Family-plan signup or
+    cancellation issues, including Premium features (e.g. ad-free
+    listening) not matching what was actually paid for.
+  always_escalate: true
+  examples:
+    - "@SpotifyCares I was charged 4 Spotify premium even tho I have a free account. Thought maybe I didn't cancel but checked and it says I did."
+    - "@SpotifyCares I've canceled my account twice, but you guys keep charging me. Why?"
+    - "Hey @SpotifyCares, what the hell is going on with your Family account? I have been paying $17.99 per month but my wife can't logon. She has accepted the invit"
+    - "@115888 3 ads in 20 minutes, 2 of which promised 30 mins of ad-free music. WTF? We can't change playlists in 30 mins or we get more ads?"
+
+- name: "Playback / App Technical Issue"
+  description: >
+    App crashes, playback failures, sync problems across devices, OS or
+    device compatibility bugs, and Bluetooth/Connect issues -- generic
+    technical troubleshooting that is not tied to a specific account
+    action and can usually be resolved with standard steps.
+  always_escalate: false
+  examples:
+    - "@115888 my app continues to play music when i pull my headphones out, and if i switch to any other thing like youtube or a movie, spotify is silent when i start"
+    - "@115888 you probably know this, but it appears my podcast progress and played/unplayed isn't syncing between mobile and desktop clients"
+    - "@SpotifyCares Twice this week on OSX10.13 Can't play certain artists (e.g. Beck/Eminem) Get “Song not avail..” Plays on mobile? Thoughts?"
+
+- name: "Content & Catalog"
+  description: >
+    Missing or incorrectly attributed songs, albums, or artists; catalog
+    availability by region; and requests to add specific content. Not
+    account-specific, so a public, informational reply is usually safe.
+  always_escalate: false
+  examples:
+    - "Hi @115888 why is the song title wrong?"
+    - "@116130 just to let you know \"Secrets - I Will\" shouldn't be placed under the artist @369363 ..... giving me a heart attack!"
+    - "Hey @115888! I'm really missing @23416's cover of @76's #IceMachine after it disappeared from your services earlier. How come it is gone?"
+
+- name: "Feature Request & Product Feedback"
+  description: >
+    Requests for new features or UI changes, and product feedback or
+    complaints that are not a technical bug or a billing issue.
+  always_escalate: false
+  examples:
+    - "Would very much love a Never Play This list in @115888. So that I don't have to scramble for the skip button when 500 Miles starts."
+    - "will @115888 ever bring back the Lyric feature?"
+    - "@SpotifyCares Okay how in the world do I make my playlist so my husband can add to it? We used to be able to do so."
+
+- name: "General Complaint / Praise / Other"
+  description: >
+    Vague frustration or venting, praise/thanks, or messages without
+    enough information to act on. Default bucket when no other intent
+    clearly applies; a real support agent would typically acknowledge
+    and, if needed, ask a clarifying question rather than guess.
+  always_escalate: false
+  examples:
+    - "GET IT THE FUCK TOGETHER"
+    - "My Time Capsule is so damn accurate! Took me back to my middle school days. Thank you, @SpotifyCares!"
+    - "@117153 Hi I need help someones on my account cant seem to get them off.."
