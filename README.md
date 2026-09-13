@@ -10,6 +10,11 @@ dataset. Given an incoming customer message, it:
    similar issues (semantic retrieval over ~4,000 reconstructed conversations).
 3. **Decides** `auto_handle` vs `escalate`, with a stated reason.
 
+**Headline result** (113-example held-out test split): 0.83 intent accuracy /
+0.83 macro F1, vs. 0.19 / 0.05 (trivial baseline) and 0.43 / 0.31 (simple
+baseline); 2 false auto-handles out of 113. Full table, judge scores, and
+failure analysis in `report/REPORT.md`.
+
 See `report/REPORT.md` for problem framing, baseline comparisons, failure
 analysis, and an honest look at what the headline numbers don't tell you.
 See `report/DECISIONS.md` for the non-obvious engineering calls and why.
@@ -23,7 +28,7 @@ raw TWCS export (3M tweets)
    -> src/eda_taxonomy.py      embed + cluster customer messages (dev-time only)
    -> intents.yaml             6 intents, hand-named from real clusters
    -> src/label_tool.py        hybrid human+LLM-assisted golden-set labeling
-   -> golden/golden_set.csv    150-250 hand-confirmed examples
+   -> golden/golden_set.csv    150 hand-confirmed examples
    -> src/retrieve.py          builds the cached semantic retrieval index
    -> data/processed/retrieval_index.{jsonl,npy}
 
@@ -99,7 +104,7 @@ the two merge decisions (family-plan issues and ads-on-premium) and why.
 
 ## Golden set
 
-`golden/golden_set.csv` (150-250 examples) was built with hybrid labeling:
+`golden/golden_set.csv` (150 examples -- the assignment's minimum) was built with hybrid labeling:
 a human labels a ~45-example seed set with no model assistance, then an
 LLM drafts suggestions for the rest using that seed set + a written rubric
 (`golden/labeling_rubric.md`) as context -- every suggestion is reviewed
