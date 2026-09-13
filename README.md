@@ -160,10 +160,19 @@ generated results.
 1. `pip install -r requirements.txt`, set `NVIDIA_API_KEY` in `.env`.
 2. Golden set and retrieval index are already committed/cached for you
    (`golden/golden_set.csv`, `data/processed/`) -- `bash scripts/run_eval.sh`
-   reproduces the headline metrics from there in well under 15 minutes.
+   reproduces the headline metrics from there.
 3. To rebuild from scratch instead (raw dataset required): `python -m
    src.data_prep && python -m src.retrieve && python -m src.label_tool`
    before `run_eval.sh`.
+
+**On timing:** the harness itself is designed for a 15-minute budget (bounded
+concurrency, no redundant recomputation), but the actual run this report's
+numbers came from took ~40 minutes end to end, almost entirely due to
+NVIDIA NIM free-tier latency variability (frequent request timeouts that
+trigger this project's own retry logic) -- not something fully controllable
+from this side. See `report/REPORT.md`'s "misleading headline number"
+section for the honest account; a paid API tier would likely close most of
+the gap.
 
 ## Design decisions & limitations
 

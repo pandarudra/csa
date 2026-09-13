@@ -26,7 +26,7 @@ from pydantic import BaseModel
 from . import config
 from .llm_client import NvidiaClient, NvidiaRequestError
 from .schemas import AgentAction, ConversationThread, GoldenExample, IntentDefinition, LabelSource
-from .utils import load_intents, read_jsonl, set_global_seed
+from .utils import load_intents, read_golden_csv, read_jsonl, set_global_seed
 
 logger = logging.getLogger(__name__)
 
@@ -65,28 +65,10 @@ def sample_candidates(
     return pool[:target_size]
 
 
-_NULLABLE_FIELDS = ("llm_suggested_intent", "llm_suggested_action", "split")
-
-
 def _load_existing(path: Path) -> list[GoldenExample]:
-    """Read golden_set.csv back into GoldenExample rows.
-
-    csv.DictWriter serializes a Python `None` as an empty string, but
-    csv.DictReader reads it back as `""`, not `None` -- pydantic then
-    rejects `""` for the Optional[AgentAction]/Literal fields, since
-    neither accepts an empty string. Restoring `None` for the known
-    nullable columns before validation makes the round trip lossless.
-    """
     if not path.exists():
         return []
-    with path.open(newline="", encoding="utf-8") as f:
-        rows = []
-        for row in csv.DictReader(f):
-            for field in _NULLABLE_FIELDS:
-                if row.get(field) == "":
-                    row[field] = None
-            rows.append(GoldenExample.model_validate(row))
-        return rows
+    return read_golden_csv(path)
 
 
 def _append(path: Path, example: GoldenExample, write_header: bool) -> None:

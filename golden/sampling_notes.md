@@ -1,9 +1,8 @@
 # How the golden set was sampled and labeled
 
-**Status: placeholder.** This file describes the intended methodology,
-already implemented in `src/label_tool.py`. The actual numbers below get
-filled in once the real labeling session (`python -m src.label_tool`) is
-complete -- see the TODO markers.
+150 examples, labeled across two sessions on 2026-09-10 and 2026-09-13.
+Methodology below was decided and implemented before labeling started; the
+numbers are the actual result.
 
 ## Sampling
 
@@ -18,23 +17,22 @@ discovery (see `intents.yaml`'s header comment) are large enough relative
 to 200 that plain random sampling was expected to give a workable spread
 across all 6 intents without deliberate balancing.
 
-TODO after labeling: report the actual resulting intent distribution here,
-e.g.:
+Actual resulting distribution (150 total):
 
 ```
-Account & Login:                    NN
-Billing & Subscription:             NN
-Playback / App Technical Issue:     NN
-Content & Catalog:                  NN
-Feature Request & Product Feedback: NN
-General Complaint / Praise / Other: NN
+Billing & Subscription:             30
+General Complaint / Praise / Other: 28
+Playback / App Technical Issue:     27
+Content & Catalog:                  24
+Feature Request & Product Feedback: 23
+Account & Login:                    18
 ```
 
-If any intent ended up with fewer than ~10 examples, note it here -- that
-bucket's per-intent metrics in `results/metrics.json` should be read with
-appropriate skepticism (small-sample noise), and this is exactly the kind
-of thing that belongs in report/REPORT.md's "misleading headline number"
-section.
+Every intent cleared 18 examples -- no bucket is so thin that per-intent
+metrics are pure noise, though Account & Login (the smallest, 18 total, 14
+of those landing in the test split) still means each individual mistake on
+it swings that intent's precision/recall by ~7 points. Worth remembering
+when reading `results/metrics.json`'s per-intent numbers.
 
 ## Labeling
 
@@ -51,17 +49,30 @@ Hybrid seed + assisted, per `golden/labeling_rubric.md`:
    exactly which of `human`, `llm_suggested_human_confirmed`, or
    `llm_suggested_human_edited` was recorded for each row.
 
-TODO after labeling: report the label-source breakdown, e.g.:
+Actual label-source breakdown (150 total):
 
 ```
-human:                          45   (the seed set)
-llm_suggested_human_confirmed:  NN
-llm_suggested_human_edited:     NN
+human:                          48   (the seed set -- slightly above the
+                                      planned 45, since a few extra were
+                                      labeled before the assisted phase
+                                      config change landed, see below)
+llm_suggested_human_confirmed:  76
+llm_suggested_human_edited:     26
 ```
 
-A high edit rate on assisted labels would say the LLM's suggestions
-needed real correction, not just rubber-stamping -- also worth surfacing
-honestly in the report rather than glossing over.
+Edit rate on assisted labels: 26 / 102 = 25.5% -- about one in four
+LLM suggestions needed a real correction (a different intent, a flipped
+action, or a rewritten reason), not just a rubber-stamp accept. That rate
+is evidence the human review step was doing real work, not formality.
+
+**Process note:** `GOLDEN_SET_TARGET_SIZE` was originally set to 200,
+lowered to 150 (the assignment's stated minimum) partway through labeling
+once 77 examples were already done, after weighing labeling time against
+the marginal value of the extra 50. `sample_candidates()`'s seeded shuffle
+doesn't depend on `target_size` (it truncates the same shuffled order to a
+different length), so every already-labeled thread_id remained valid under
+the smaller target -- verified directly before continuing (see
+`report/DECISIONS.md`).
 
 ## Dev/test split
 

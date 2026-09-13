@@ -168,9 +168,9 @@ def _run_full_agent(agent: SupportAgent, examples: list[GoldenExample]) -> list[
 
 
 def evaluate_system(
-    name: str, run_fn: Callable[[GoldenExample], AgentResult], examples: list[GoldenExample]
+    name: str, run_fn: Callable[[str], AgentResult], examples: list[GoldenExample]
 ) -> dict:
-    results = [run_fn(e) for e in examples]
+    results = [run_fn(e.customer_text) for e in examples]
     intent_metrics = compute_intent_metrics([e.intent for e in examples], [r.intent for r in results])
     escalation_metrics = compute_escalation_metrics([e.action for e in examples], [r.action for r in results])
     return {"name": name, "intent": intent_metrics, "escalation": escalation_metrics, "results": results}
@@ -309,10 +309,23 @@ def main() -> None:
     logger.info("Full agent: intent_acc=%.3f", full_intent["accuracy"])
 
     client = NvidiaClient()
-    judge_scores = [
-        judge_reply(example.customer_text, _format_evidence(result), result.reply, client)
-        for example, result in zip(test, full_results)
-    ]
+    _min_score = JudgeScore(
+        groundedness=1, correctness=1, helpfulness=1, brand_voice=1, actionability=1, no_unsupported_claims=1
+    )
+
+    def judge_one(pair: tuple[GoldenExample, AgentResult]) -> JudgeScore:
+        example, result = pair
+        try:
+            return judge_reply(example.customer_text, _format_evidence(result), result.reply, client)
+        except NvidiaRequestError as exc:
+            logger.error("Judge scoring failed for thread %s: %s", example.thread_id, exc)
+            return _min_score
+
+    # Concurrent, like _run_full_agent -- a sequential loop over the whole
+    # test set here was the actual reason an earlier run risked blowing the
+    # 15-minute reproduction budget (this call happens once per test
+    # example, on top of the full agent's own per-example calls).
+    judge_scores = run_concurrently(judge_one, list(zip(test, full_results)))
     mean_overall = sum(s.overall for s in judge_scores) / len(judge_scores) if judge_scores else 0.0
     logger.info("Mean judge score (full agent replies): %.2f / 5", mean_overall)
 

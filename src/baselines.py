@@ -15,7 +15,6 @@ fair rather than rigged comparison.
 """
 from __future__ import annotations
 
-import csv
 import logging
 import pickle
 from collections import Counter
@@ -29,7 +28,7 @@ from sklearn.model_selection import train_test_split
 
 from . import config
 from .schemas import AgentAction, AgentResult, ConversationThread, GoldenExample, IntentDefinition, RetrievedExample
-from .utils import load_intents
+from .utils import load_intents, read_golden_csv
 
 logger = logging.getLogger(__name__)
 
@@ -40,8 +39,7 @@ _CANNED_REPLY = "Thanks for reaching out! Please DM us with more details so our 
 def load_golden_examples(path: Path = config.GOLDEN_SET_PATH) -> list[GoldenExample]:
     if not path.exists():
         raise FileNotFoundError(f"Golden set not found at {path}; run `python -m src.label_tool` first")
-    with path.open(newline="", encoding="utf-8") as f:
-        return [GoldenExample.model_validate(row) for row in csv.DictReader(f)]
+    return read_golden_csv(path)
 
 
 def split_dev_test(

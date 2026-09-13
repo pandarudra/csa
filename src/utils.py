@@ -5,6 +5,7 @@ utilities that multiple modules would otherwise duplicate.
 """
 from __future__ import annotations
 
+import csv
 import json
 import random
 from collections.abc import Iterable, Iterator
@@ -16,7 +17,15 @@ import numpy as np
 import yaml
 from pydantic import BaseModel
 
-from .schemas import IntentDefinition
+from .schemas import GoldenExample, IntentDefinition
+
+# GoldenExample columns that are Optional/Literal-typed: csv.DictWriter
+# serializes Python `None` as an empty string, but csv.DictReader reads it
+# back as `""`, which pydantic rejects for these fields (neither an Enum
+# nor a Literal accepts an empty string as None). Restoring `None` here
+# before validation makes the CSV round trip lossless. This bit us twice
+# from two separate ad hoc CSV readers before being pulled out to one place.
+_GOLDEN_CSV_NULLABLE_FIELDS = ("llm_suggested_intent", "llm_suggested_action", "split")
 
 # Twitter's raw export format, e.g. "Tue Oct 31 22:10:47 +0000 2017".
 _TWITTER_DATETIME_FORMAT = "%a %b %d %H:%M:%S %z %Y"
@@ -66,3 +75,21 @@ def load_intents(path: Path) -> list[IntentDefinition]:
     with path.open("r", encoding="utf-8") as f:
         raw = yaml.safe_load(f)
     return [IntentDefinition.model_validate(item) for item in raw]
+
+
+def read_golden_csv(path: Path) -> list[GoldenExample]:
+    """Read golden_set.csv into validated GoldenExample rows.
+
+    The one place this happens -- `label_tool.py` and `baselines.py` both
+    call this rather than each parsing the CSV themselves, after the same
+    empty-string-vs-None bug (see `_GOLDEN_CSV_NULLABLE_FIELDS`) was fixed
+    twice in two separate ad hoc readers.
+    """
+    with path.open(newline="", encoding="utf-8") as f:
+        rows = []
+        for row in csv.DictReader(f):
+            for field in _GOLDEN_CSV_NULLABLE_FIELDS:
+                if row.get(field) == "":
+                    row[field] = None
+            rows.append(GoldenExample.model_validate(row))
+        return rows

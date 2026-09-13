@@ -1,0 +1,335 @@
+{
+  "trivial_baseline": {
+    "intent": {
+      "accuracy": 0.18584070796460178,
+      "macro_f1": 0.05223880597014926,
+      "labels": [
+        "Account & Login",
+        "Billing & Subscription",
+        "Content & Catalog",
+        "Feature Request & Product Feedback",
+        "General Complaint / Praise / Other",
+        "Playback / App Technical Issue"
+      ],
+      "per_intent": {
+        "Account & Login": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 14
+        },
+        "Billing & Subscription": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 23
+        },
+        "Content & Catalog": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 18
+        },
+        "Feature Request & Product Feedback": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 17
+        },
+        "General Complaint / Praise / Other": {
+          "precision": 0.18584070796460178,
+          "recall": 1.0,
+          "f1": 0.31343283582089554,
+          "support": 21
+        },
+        "Playback / App Technical Issue": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 20
+        }
+      },
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          14,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          23,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          18,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          17,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          21,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          20,
+          0
+        ]
+      ]
+    },
+    "escalation": {
+      "precision_escalate": 0.30973451327433627,
+      "recall_escalate": 1.0,
+      "f1_escalate": 0.47297297297297297,
+      "false_auto_handle_count": 0,
+      "false_escalation_count": 78,
+      "n": 113
+    }
+  },
+  "simple_baseline": {
+    "intent": {
+      "accuracy": 0.4336283185840708,
+      "macro_f1": 0.3095093795093795,
+      "labels": [
+        "Account & Login",
+        "Billing & Subscription",
+        "Content & Catalog",
+        "Feature Request & Product Feedback",
+        "General Complaint / Praise / Other",
+        "Playback / App Technical Issue"
+      ],
+      "per_intent": {
+        "Account & Login": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 14
+        },
+        "Billing & Subscription": {
+          "precision": 0.3888888888888889,
+          "recall": 0.9130434782608695,
+          "f1": 0.5454545454545454,
+          "support": 23
+        },
+        "Content & Catalog": {
+          "precision": 0.3333333333333333,
+          "recall": 0.05555555555555555,
+          "f1": 0.09523809523809523,
+          "support": 18
+        },
+        "Feature Request & Product Feedback": {
+          "precision": 0.3333333333333333,
+          "recall": 0.058823529411764705,
+          "f1": 0.1,
+          "support": 17
+        },
+        "General Complaint / Praise / Other": {
+          "precision": 0.6086956521739131,
+          "recall": 0.6666666666666666,
+          "f1": 0.6363636363636364,
+          "support": 21
+        },
+        "Playback / App Technical Issue": {
+          "precision": 0.4,
+          "recall": 0.6,
+          "f1": 0.48,
+          "support": 20
+        }
+      },
+      "confusion_matrix": [
+        [
+          0,
+          13,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          21,
+          0,
+          0,
+          1,
+          1
+        ],
+        [
+          0,
+          6,
+          1,
+          1,
+          4,
+          6
+        ],
+        [
+          0,
+          5,
+          1,
+          1,
+          2,
+          8
+        ],
+        [
+          0,
+          4,
+          1,
+          0,
+          14,
+          2
+        ],
+        [
+          0,
+          5,
+          0,
+          1,
+          2,
+          12
+        ]
+      ]
+    },
+    "escalation": {
+      "precision_escalate": 0.5185185185185185,
+      "recall_escalate": 0.8,
+      "f1_escalate": 0.6292134831460674,
+      "false_auto_handle_count": 7,
+      "false_escalation_count": 26,
+      "n": 113
+    }
+  },
+  "full_agent": {
+    "intent": {
+      "accuracy": 0.831858407079646,
+      "macro_f1": 0.8286360925895809,
+      "labels": [
+        "Account & Login",
+        "Billing & Subscription",
+        "Content & Catalog",
+        "Feature Request & Product Feedback",
+        "General Complaint / Praise / Other",
+        "Playback / App Technical Issue"
+      ],
+      "per_intent": {
+        "Account & Login": {
+          "precision": 1.0,
+          "recall": 0.7857142857142857,
+          "f1": 0.88,
+          "support": 14
+        },
+        "Billing & Subscription": {
+          "precision": 0.8518518518518519,
+          "recall": 1.0,
+          "f1": 0.92,
+          "support": 23
+        },
+        "Content & Catalog": {
+          "precision": 0.8,
+          "recall": 0.6666666666666666,
+          "f1": 0.7272727272727273,
+          "support": 18
+        },
+        "Feature Request & Product Feedback": {
+          "precision": 0.7894736842105263,
+          "recall": 0.8823529411764706,
+          "f1": 0.8333333333333334,
+          "support": 17
+        },
+        "General Complaint / Praise / Other": {
+          "precision": 0.7727272727272727,
+          "recall": 0.8095238095238095,
+          "f1": 0.7906976744186046,
+          "support": 21
+        },
+        "Playback / App Technical Issue": {
+          "precision": 0.8421052631578947,
+          "recall": 0.8,
+          "f1": 0.8205128205128205,
+          "support": 20
+        }
+      },
+      "confusion_matrix": [
+        [
+          11,
+          3,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          23,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          12,
+          2,
+          3,
+          1
+        ],
+        [
+          0,
+          0,
+          1,
+          15,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          1,
+          2,
+          17,
+          1
+        ],
+        [
+          0,
+          1,
+          1,
+          0,
+          2,
+          16
+        ]
+      ]
+    },
+    "escalation": {
+      "precision_escalate": 0.36666666666666664,
+      "recall_escalate": 0.9428571428571428,
+      "f1_escalate": 0.528,
+      "false_auto_handle_count": 2,
+      "false_escalation_count": 57,
+      "n": 113
+    },
+    "mean_judge_score": 2.8466076696165192
+  },
+  "dev_size": 37,
+  "test_size": 113
+}

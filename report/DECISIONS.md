@@ -152,3 +152,48 @@ each area.
     The agent never claims to have taken an action (a refund, a
     cancellation) it cannot actually perform -- see the reply-drafting
     prompt's explicit constraint against this in `src/pipeline.py`.
+
+17. **Golden set target lowered from 200 to 150 mid-labeling, not
+    pre-planned.** After 77 of 200 planned examples were hand-labeled, the
+    remaining ~123 was weighed against the marginal evaluation value of
+    the extra 50 over the assignment's stated 150 minimum, and the target
+    was cut to 150. This was safe to do after the fact because
+    `sample_candidates()`'s seeded shuffle doesn't depend on `target_size`
+    -- it always shuffles the full thread pool the same way and only
+    truncates to a different length, so every thread_id already labeled
+    under the 200-target sampling remained valid under the 150-target one
+    (verified directly: zero already-labeled examples fell outside the
+    smaller candidate window). This is disclosed, not hidden, in
+    `golden/sampling_notes.md`.
+
+18. **Two real bugs were caught by actually running the eval harness on
+    real data, not by code review.** `evaluate_system()` passed the whole
+    `GoldenExample` object to each baseline's `run()` instead of
+    `.customer_text` -- masked during earlier testing because
+    `TrivialBaseline`'s classifier ignores its input entirely
+    (`MajorityIntentClassifier.predict` always returns the same label
+    regardless of argument), so it never crashed there; it only surfaced
+    once `SimpleBaseline.run()` tried to call `.lower()` on a pydantic
+    model inside `TfidfVectorizer`. Separately, the LLM-judge scoring loop
+    in `eval_harness.main()` was sequential where every other per-example
+    LLM call in the harness used `run_concurrently` -- on a ~113-example
+    test set this risked being the single largest contributor to blowing
+    the 15-minute reproduction budget, silently, since it would not have
+    crashed, just run for a long time. Both are exactly the kind of
+    mistake type-hints and a code read don't catch but one real run does
+    -- worth remembering before trusting any measurement that was never
+    actually run end to end.
+
+19. **The full agent measurably over-escalates relative to the golden
+    labels (57 false escalations vs. 2 false auto-handles on 113 test
+    examples).** Traced to the escalation-review prompt's "asks for a
+    specific promise" and "shows urgency" triggers being interpreted more
+    liberally by the model than intended -- e.g. "will the new album be
+    available at midnight?" (a factual availability question) and "any
+    chance music videos come to Spotify?" (an ordinary feature request)
+    both got escalated as "asking for a specific promise." Not patched
+    post-hoc by tuning the prompt against the test set (that would be
+    exactly the test-set leakage the dev/test split exists to prevent) --
+    logged here as a real, measured finding and covered in
+    `report/REPORT.md`'s failure analysis instead. A fix belongs in a
+    dev-split-only iteration next time, not a same-session prompt patch.

@@ -1,0 +1,202 @@
+[
+  {
+    "thread_id": "2198200",
+    "customer_text": ".@115888 will .@118062 new album be available at midnight? https://t.co/3yJ3yW9Mkb",
+    "true_intent": "Content & Catalog",
+    "predicted_intent": "Content & Catalog",
+    "true_action": "auto_handle",
+    "predicted_action": "escalate",
+    "escalation_reason": "Customer asks for a specific promise (availability at midnight) and historical evidence is too weak (similarity 0.49) to safely resolve without guessing.",
+    "reply": "@118062 Hey! Music availability all boils down to licensing agreements. We have more info here: https://t.co/VMrgnGpB4G"
+  },
+  {
+    "thread_id": "1102753",
+    "customer_text": "@SpotifyCares I have a premium account &amp;it works with sonos but when I put my password in just 2use Spotify on my phone I have no premium \ud83d\ude0f",
+    "true_intent": "Account & Login",
+    "predicted_intent": "Billing & Subscription",
+    "true_action": "escalate",
+    "predicted_action": "escalate",
+    "escalation_reason": "Message asks for a specific promise (premium status on phone) and shows urgency with emoji, but historical similarity 0.87 is strong enough to safely resolve without guessing, so default escalate policy applies.",
+    "reply": "Thanks for reaching out -- we're looking into this and will follow up with more details."
+  },
+  {
+    "thread_id": "914896",
+    "customer_text": "@SpotifyCares my premium trial isn't activating :// I can't remember my old account so I made a new account and it's not letting me get in",
+    "true_intent": "Account & Login",
+    "predicted_intent": "Billing & Subscription",
+    "true_action": "escalate",
+    "predicted_action": "escalate",
+    "escalation_reason": "Customer cannot access premium trial and cannot recall old account, indicating unresolved access issue requiring agent intervention.",
+    "reply": "@SpotifyCares hey there! Could you DM us the email address linked to each account? We'll do our best to help you out /BH https://t.co/ldFdZRiNAt"
+  },
+  {
+    "thread_id": "2917812",
+    "customer_text": "Wtf Spotify?? Should\u2019ve got Apple Music!!",
+    "true_intent": "General Complaint / Praise / Other",
+    "predicted_intent": "General Complaint / Praise / Other",
+    "true_action": "auto_handle",
+    "predicted_action": "escalate",
+    "escalation_reason": "Message contains profanity and explicit product rejection, indicating real anger and urgency.",
+    "reply": "@807620 Hey! Sorry to hear that. We had a little hiccup earlier, but everything should be running just fine now /JS"
+  },
+  {
+    "thread_id": "238158",
+    "customer_text": "@SpotifyCares Hi, why is \u2018Night and Day\u2019 from Bill Evans Trio\u2019s album Everybody Digs Bill Evans available on my laptop but not my phone? Ta",
+    "true_intent": "Content & Catalog",
+    "predicted_intent": "Playback / App Technical Issue",
+    "true_action": "auto_handle",
+    "predicted_action": "escalate",
+    "escalation_reason": "Customer reports inconsistent availability across devices, which is a technical issue requiring specific device troubleshooting beyond simple playback handling.",
+    "reply": "@SpotifyCares Hi there! Could you send us a DM with your account's email address and username? We'll take a look backstage /RV"
+  },
+  {
+    "thread_id": "2653035",
+    "customer_text": "@SpotifyCares Why is my music on my phone randomly pausing and say it's playing suggested songs rather than the playlist I asked for?",
+    "true_intent": "Playback / App Technical Issue",
+    "predicted_intent": "Playback / App Technical Issue",
+    "true_action": "auto_handle",
+    "predicted_action": "escalate",
+    "escalation_reason": "Message asks for specific promise (timeline) and shows urgency, but historical evidence is too weak (0.67 similarity) to safely resolve without guessing.",
+    "reply": "@345678 Hey there! Can you let us know the device, OS, and Spotify version you're using? We'll take a look into this for you. /KL"
+  },
+  {
+    "thread_id": "1099441",
+    "customer_text": "@SpotifyCares is there any chance that Music Videos for songs will ever go on Spotify for a future update?",
+    "true_intent": "Feature Request & Product Feedback",
+    "predicted_intent": "Feature Request & Product Feedback",
+    "true_action": "auto_handle",
+    "predicted_action": "escalate",
+    "escalation_reason": "Message asks for a future update promise, which exceeds the scope of auto-handle for feature requests.",
+    "reply": "@SpotifyCares Hi there! We appreciate you sharing this feature request. We're always looking to improve the app, and your feedback about music videos is valuable. For now, you can enjoy the audio tracks available on Spotify. /RB"
+  },
+  {
+    "thread_id": "2182196",
+    "customer_text": "Cmon,  @115888, we want an excuse to pay, but your radio and music sucks rn. If you need musicians help, let us know.",
+    "true_intent": "General Complaint / Praise / Other",
+    "predicted_intent": "General Complaint / Praise / Other",
+    "true_action": "auto_handle",
+    "predicted_action": "escalate",
+    "escalation_reason": "Message contains explicit anger ('sucks rn') and demands ('we want an excuse to pay'), asking for acknowledgment of help, which requires human intervention beyond auto-handle capabilities.",
+    "reply": "@115888 Thanks for the feedback. To help us look into this, could you share your account's email address? /MS"
+  },
+  {
+    "thread_id": "1199651",
+    "customer_text": "Spotify's latest update restricts free-listening even further. Lame! They got greedy, the ads weren't enough @SpotifyCares ?\nGoodbye!",
+    "true_intent": "General Complaint / Praise / Other",
+    "predicted_intent": "General Complaint / Praise / Other",
+    "true_action": "auto_handle",
+    "predicted_action": "escalate",
+    "escalation_reason": "Message contains explicit anger ('Lame!', 'greedy') and urgency ('Goodbye!'), indicating a high risk of churn and requiring human intervention beyond auto-handle capabilities.",
+    "reply": "@SpotifyCares Thanks for reaching out. Can you let us know what's happening exactly? /QI"
+  },
+  {
+    "thread_id": "494243",
+    "customer_text": "dear @115888 i'm a premium android user, can you please let us reorder the tracks in a playlist? thanks \u270c",
+    "true_intent": "Feature Request & Product Feedback",
+    "predicted_intent": "Feature Request & Product Feedback",
+    "true_action": "auto_handle",
+    "predicted_action": "escalate",
+    "escalation_reason": "Customer requests a specific feature (track reordering) with premium user context, but historical similarity is only 0.41, which is below the 0.3 threshold for safe auto-resolution without guessing.",
+    "reply": "@115888 Hi there! We can see why this could be useful. We'll pass on your feedback to our devs /KL"
+  },
+  {
+    "thread_id": "402335",
+    "customer_text": "why doesn't @115888 let me see who follows my playlists :/",
+    "true_intent": "General Complaint / Praise / Other",
+    "predicted_intent": "General Complaint / Praise / Other",
+    "true_action": "auto_handle",
+    "predicted_action": "escalate",
+    "escalation_reason": "Message asks for a specific feature change and shows frustration, but historical similarity 0.62 is too weak to safely auto-handle without guessing.",
+    "reply": "@244460 Hey there! Our Curation team are independent so there's no formal submission process. You can also check out https://t.co/Ackn8bZUwo to help you gain visibility. Let us know if you have more questions /MS"
+  },
+  {
+    "thread_id": "1144865",
+    "customer_text": "@SpotifyCares Why is the shuffle functionality so janky? Love Sgt. Pepper's but shouldn't hear it on repeat with 1000s of songs in library.",
+    "true_intent": "Feature Request & Product Feedback",
+    "predicted_intent": "Feature Request & Product Feedback",
+    "true_action": "auto_handle",
+    "predicted_action": "escalate",
+    "escalation_reason": "Message contains explicit frustration ('janky') and a specific complaint about core functionality, but historical similarity of 0.64 is insufficient to safely auto-handle without risking incorrect resolution.",
+    "reply": "@SpotifyCares Hi there! We\u2019ve recently made some improvements to our shuffle algorithm. We\u2019d love to hear your feedback here: https://t.co/T3vZnSL3od /PC"
+  },
+  {
+    "thread_id": "2042100",
+    "customer_text": "@115888 please stop bombarding me with BTS ads.. I DONT WANT IT!!!!",
+    "true_intent": "General Complaint / Praise / Other",
+    "predicted_intent": "General Complaint / Praise / Other",
+    "true_action": "auto_handle",
+    "predicted_action": "escalate",
+    "escalation_reason": "Customer expresses strong anger ('I DONT WANT IT!!!') and explicitly requests to stop ads, which requires a specific action beyond auto-handling capabilities.",
+    "reply": "@603835 Hi! Thanks for your feedback - we'll pass it on. For now, check out https://t.co/zgnxs5kPEu if you haven't had a subscription before /PL"
+  },
+  {
+    "thread_id": "1792289",
+    "customer_text": "can we put @19279 mixtapes on spotify @115888",
+    "true_intent": "Content & Catalog",
+    "predicted_intent": "Content & Catalog",
+    "true_action": "auto_handle",
+    "predicted_action": "escalate",
+    "escalation_reason": "historical similarity 0.45 is below the 0.5 threshold for safe auto-resolution",
+    "reply": "@19279 Hey there! Fingers crossed we'll be able to have it soon, but there's info about Spotify content here: https://t.co/0i8GpimuDa /MQ"
+  },
+  {
+    "thread_id": "2021797",
+    "customer_text": "@115888 please https://t.co/RjunN22uDe",
+    "true_intent": "Content & Catalog",
+    "predicted_intent": "General Complaint / Praise / Other",
+    "true_action": "auto_handle",
+    "predicted_action": "escalate",
+    "escalation_reason": "Message contains a URL and handle, indicating a specific customer issue requiring human review; historical similarity 0.41 is too weak to safely auto-handle.",
+    "reply": "@115888 Hi there! We can help out in English via Twitter. Could you DM us your account's email address and username? We'll take a look backstage."
+  },
+  {
+    "thread_id": "2492548",
+    "customer_text": "@SpotifyCares Can we work on getting a select feature? So it's possible to select more than one song to add/remove from playlists at a time. It takes multiple steps for one song and takes entirely too long if you're trying to make a party playlist with 100+ songs.",
+    "true_intent": "Feature Request & Product Feedback",
+    "predicted_intent": "Feature Request & Product Feedback",
+    "true_action": "auto_handle",
+    "predicted_action": "escalate",
+    "escalation_reason": "Message requests a specific feature implementation timeline and asks for a select feature, which requires a promise of future product changes rather than resolving an immediate issue.",
+    "reply": "@SpotifyCares Thanks for the suggestion! We can see how selecting multiple songs at once would streamline playlist building. I've noted your feedback. You can share your idea on our Ideas board to get more visibility and votes from the community: https://community.spotify.com/t5/Ideas/idi-p/your-ideas. Let me know if you need help with anything else!"
+  },
+  {
+    "thread_id": "656468",
+    "customer_text": "@SpotifyCares when does the offer to get 3 months of premium for $9.99 expire?",
+    "true_intent": "Billing & Subscription",
+    "predicted_intent": "Billing & Subscription",
+    "true_action": "auto_handle",
+    "predicted_action": "escalate",
+    "escalation_reason": "Message asks for a specific timeline (expiry date) and the historical case similarity is too weak (0.66) to safely resolve without guessing.",
+    "reply": "@SpotifyCares I'd be happy to check the details of that offer for you! Could you please DM me the email address associated with your account so I can take a look?"
+  },
+  {
+    "thread_id": "2061279",
+    "customer_text": "I just want to watch HD. Hello @115888 @SpotifyCares please make this available worldwide. https://t.co/hijvhXODwX",
+    "true_intent": "Feature Request & Product Feedback",
+    "predicted_intent": "Feature Request & Product Feedback",
+    "true_action": "auto_handle",
+    "predicted_action": "escalate",
+    "escalation_reason": "Message asks for a specific feature availability promise ('make this available worldwide') and shows urgency, but historical similarity is only 0.78, which is insufficient to safely auto-handle without guessing.",
+    "reply": "@609626 Hi! We'll have it available to everyone as soon as licensing allows. There's more info about Spotify content at https://t.co/MEjmIRL2eB /AY"
+  },
+  {
+    "thread_id": "1118829",
+    "customer_text": "Stream the hottest tracks and videos, every day on RapCaviar.",
+    "true_intent": "General Complaint / Praise / Other",
+    "predicted_intent": "Feature Request & Product Feedback",
+    "true_action": "auto_handle",
+    "predicted_action": "auto_handle",
+    "escalation_reason": "Message is a positive feature request with no anger, urgency, or specific promises; historical similarity 0.40 is sufficient for auto-handle.",
+    "reply": "@user Thanks for the feedback! Our Curation team are independent &amp; use taste, data, research, and trends to create playlists, but we\u2019ll pass on your suggestion \ud83d\ude42 /CP"
+  },
+  {
+    "thread_id": "2245983",
+    "customer_text": "Is the #StrangerThings2 soundtrack up on @115888 yet? It gives me life!",
+    "true_intent": "Content & Catalog",
+    "predicted_intent": "Content & Catalog",
+    "true_action": "auto_handle",
+    "predicted_action": "escalate",
+    "escalation_reason": "Message asks for a specific status update on a product availability, which requires a concrete promise or timeline that the default auto-handle policy cannot safely provide.",
+    "reply": "@682003 Hi there! Thanks for the excitement! Our Curation team are independent, but we\u2019ll make sure to pass on your feedback. /GT"
+  }
+]
