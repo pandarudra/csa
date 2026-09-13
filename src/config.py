@@ -80,6 +80,10 @@ MAX_THREAD_TURNS = int(os.environ.get("MAX_THREAD_TURNS", "12"))
 RETRIEVAL_TOP_K = int(os.environ.get("RETRIEVAL_TOP_K", "4"))
 
 # --- Golden set ------------------------------------------------------------------
-GOLDEN_SET_TARGET_SIZE = int(os.environ.get("GOLDEN_SET_TARGET_SIZE", "200"))
+# Lowered from 200 to the assignment's stated minimum after the labeler had
+# already hand-confirmed 77 -- sample_candidates()'s seeded shuffle doesn't
+# depend on target_size (it truncates the same shuffled order), so already-
+# labeled thread_ids stay valid regardless of where they land in the cut.
+GOLDEN_SET_TARGET_SIZE = int(os.environ.get("GOLDEN_SET_TARGET_SIZE", "150"))
 GOLDEN_SEED_LABEL_COUNT = int(os.environ.get("GOLDEN_SEED_LABEL_COUNT", "45"))
 GOLDEN_DEV_FRACTION = float(os.environ.get("GOLDEN_DEV_FRACTION", "0.25"))
