@@ -132,6 +132,11 @@ the drafted reply, and the auto_handle/escalate decision with its reason.
 
 ### Interactive demo
 
+**Live: [harm0ny.streamlit.app](https://harm0ny.streamlit.app/)** -- no
+setup required. Hosted on Streamlit Community Cloud's free tier against a
+shared API key, so it can be slow or CPU-throttled under concurrent use
+(see `report/REPORT.md`); for a guaranteed-responsive run, use it locally:
+
 ```bash
 streamlit run app.py
 ```
