@@ -73,8 +73,8 @@ cp .env.example .env   # then edit .env and set NVIDIA_API_KEY
 All read by `src/config.py`, with defaults suitable for this project as-is.
 See `.env.example` for the full list. The only one you must set is:
 
-| Variable | Purpose |
-|---|---|
+| Variable         | Purpose                                               |
+| ---------------- | ----------------------------------------------------- |
 | `NVIDIA_API_KEY` | Required. Get a free key at https://build.nvidia.com/ |
 
 ## Dataset preparation
@@ -130,6 +130,20 @@ python scripts/run_pipeline_demo.py "I can't play any songs on Premium, it just 
 Prints the classified intent, the historical cases retrieved as grounding,
 the drafted reply, and the auto_handle/escalate decision with its reason.
 
+### Interactive demo
+
+```bash
+streamlit run app.py
+```
+
+Same pipeline (`SupportAgent`), a browser UI instead of a CLI arg: type a
+message (or select an example), see intent + confidence, the drafted reply,
+the escalation decision + reason, and the actual historical cases it was
+grounded in, per request. Useful for poking at edge cases live.
+
+![Harmony demo: a message classified as Playback / App Technical Issue, escalated with a stated reason, and a drafted reply](assets/image.png)
+![Harmony demo: the historical SpotifyCares cases retrieved to ground that reply, with similarity scores](assets/image-1.png)
+
 ## Running evaluation
 
 ```bash
@@ -167,7 +181,7 @@ generated results.
    (`golden/golden_set.csv`, `data/processed/`) -- `bash scripts/run_eval.sh`
    reproduces the headline metrics from there.
 3. To rebuild from scratch instead (raw dataset required): `python -m
-   src.data_prep && python -m src.retrieve && python -m src.label_tool`
+src.data_prep && python -m src.retrieve && python -m src.label_tool`
    before `run_eval.sh`.
 
 **On timing:** the harness itself is designed for a 15-minute budget (bounded
